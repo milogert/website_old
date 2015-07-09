@@ -1,0 +1,38 @@
+{% extends "personal/slayout.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+  <div class="col-sm-12">
+    <form role="form" class="form">
+      <div class="form-group">
+        <input type="text" class="form-control" id="search" placeholder="Search for spells">
+      </div>
+    </form>
+  </div>
+
+  <div class="row" id="results"></div>
+
+  <script>
+    $(document).ready(function() {
+
+      var thread = null;
+
+      function findMember(str) {
+        console.log('search: ' + str);
+      }
+
+      $('#search').keyup(function() {
+        clearTimeout(thread);
+        var target = $(this);
+        thread = setTimeout(function() {
+          // Check for string length.
+          if(target.val().length >= 3) {
+            findMember(target.val());
+          }
+        }, 500); 
+      });
+    });
+  </script>
+{% endblock %}
+

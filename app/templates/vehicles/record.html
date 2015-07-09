@@ -1,0 +1,66 @@
+{% extends "vehicles/slayout.html" %}
+
+{% block title %}Record - {{ theRecord.vehicle }} - {{ theRecord.date }}{% endblock %}
+
+{% block js %}
+<script>
+  $(function() {
+    $("#slidebutton").on("click", function() {
+      $("#record").animate({
+        left: "75%",
+      }, 200);
+
+      $("#record").promise().done(function() {
+        window.document.location = "{{ url_for("vehicles.serviceRecord") }}";
+      });
+    });
+  });
+</script>
+{% endblock %}
+
+{% block css %}
+<style>
+  body {
+    overflow-x: hitden;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-3">
+  <button class="btn btn-default btn-lg" id="slidebutton">back</button>
+</div>
+
+<div class="col-md-9" id="record">
+  <h1>Service Record</h1>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tr><th>Vehicle:</th><td>{{ theRecord.vehicle }}</td></tr>
+      <tr><th>Date:</th><td>{{ theRecord.date }}</td></tr>
+      <tr><th>Miles:</th><td>{{ theRecord.miles }}</td></tr>
+      <tr><th>Description:</th><td>{{ theRecord.description }} </td></tr>
+    </table>
+  </div>
+
+  <h2>Photos</h2>
+  {% if not theFiles %}
+    <p>No photos associated with this record.</p>
+  {% endif %}
+
+  <div class="row">
+    {% for aItem in theFiles %}
+      <div class="col-md-4">
+        <a href="{{ aItem }}"><img src="{{ aItem }}" class="img-responsive"></a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form action="{{ url_for("vehicles.specificRecord", theId=theRecord.id) }}" method="post" enctype="multipart/form-data">
+    {{ form_field(theForm.csrf_token, hidden=True) }}
+    {{ form_field(theForm.upload) }}
+    <button class="btn btn-default" type="submit">Upload</button>
+  </form>
+</div>
+{% endblock %}
+

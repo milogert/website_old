@@ -1,0 +1,88 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Basic{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h2>Basic Setup</h2>
+  <p>This is for the basic set up. You need at least four players. The first four roles are The King, The King's Bannerman, The Usurper, and The Usuper's Bannerman.</p>
+
+  <ul>
+    <li>At five people, add the Dragon.</li>
+    <li>At six people, add the Barbarian.</li>
+    <li>At seven people, add the Wizard.</li>
+  </ul>
+</div>
+
+<div class="col-md-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Basic Setup</h3>
+    </div>
+
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3">
+          <img src="{{ url_for('static', filename='throne_magic/img/roles/The King.jpg') }}">
+        </div>
+
+        <div class="col-md-3">
+          <img src="{{ url_for('static', filename='throne_magic/img/roles/King\'s Bannerman.jpg') }}">
+        </div>
+
+        <div class="col-md-3">
+          <img src="{{ url_for('static', filename='throne_magic/img/roles/The Usurper.jpg') }}">
+        </div>
+
+        <div class="col-md-3">
+          <img src="{{ url_for('static', filename='throne_magic/img/roles/Usurper\'s Bannerman.jpg') }}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    <h3 class="panel-title">Five Players - Dragon</h3>
+    </div>
+
+    <div class="panel-body">
+      <img src="{{ url_for('static', filename='throne_magic/img/roles/Dragon.jpg') }}">
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Six Players - Barbarian</h3>
+    </div>
+
+    <div class="panel-body">
+      <img src="{{ url_for('static', filename='throne_magic/img/roles/Barbarian.jpg') }}">
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Seven Players - Wizard</h3>
+    </div>
+
+    <div class="panel-body">
+      <img src="{{ url_for('static', filename='throne_magic/img/roles/Wizard.jpg') }}">
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends "iacl/slayout.html" %}
+
+{% block title %}Campaign {{ theId }}{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <div role="tabpanel">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a></li>
+      <li role="presentation"><a href="#rebels" aria-controls="rebels" role="tab" data-toggle="tab">Rebels</a></li>
+      <li role="presentation"><a href="#empire" aria-controls="empire" role="tab" data-toggle="tab">Empire</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="campaign">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Mission Title</th>
+              <th>Done</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th>Intro</th>
+              <td>Aftermath</td>
+              <td>barf</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="rebels">
+        <div class="row">
+          <div class="col-md-8">
+            <h1>Heroes</h1>
+            <div class="row">
+              {% for aHero in theHeroes %}
+                <div class="col-md-6">
+                  <h3>{{ aHero.name }}</h3>
+                  <h4>Purchased</h4>
+                  {% for aSkill in theSkills[aHero.name]["purchased"] %}
+                    <p>{{ aSkill.title }}</p>
+                  {% endfor %}
+                  <h4>Available</h4>
+                  {% for aSkill in theSkills[aHero.name]["available"] %}
+                    <p> {{ aSkill["name"] }} <a href="{{ url_for('.buy', code=theCampaign.code, type='skill', title=aSkill['name'], hero=aHero.name) }}">{{ aSkill["xp"] }} xp</a></p>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <h1>Gear</h1>
+            {% for aItem in theGear %}
+              <p>{{ aItem.name }} <a href="{{ url_for('.sell', code=theCampaign.code, name=aItem.name) }}">sell</a></p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="empire">
+        <div class="row">
+          <div class="col-md-4">
+            <h2>{{ theEmpire.cls }} <small>{{ theEmpire.xp }} xp, {{ theEmpire.influence }} influence</small></h2>
+            <h4>Purchased</h4>
+            {% for aSkill in theESkills["purchased"] %}
+              <p>{{ aSkill.name }}</p>
+            {% endfor %}
+            <h4>Available</h4>
+            {% for aSkill in theESkills["available"] %}
+              <p> {{ aSkill["name"] }} <a href="{{ url_for('.buy', code=theCampaign.code, type='clsupg', title=aSkill['name']) }}">{{ aSkill["xp"] }} xp</a></p>
+            {% endfor %}
+          </div>
+
+          <div class="col-md-4">
+            <h2>Agendas</h2>
+
+            {% for aSet, aSub in theAgendas.items() %}
+              {% for aAgenda in aSub %}
+                <p>
+                  {{ aAgenda["name"] }}&nbsp;
+                  <a href="{{ url_for('.buy', code=theCampaign.code, type='agenda', name=aAgenda['name']) }}">buy</a>&nbsp;
+                  <a href="{{ url_for('.activate', code=theCampaign.code, name=aAgenda['name']) }}">activate</a>&nbsp;
+                  <a href="{{ url_for('.discard', code=theCampaign.code, type='agenda', name=aAgenda['name']) }}">discard</a>
+                </p>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <h1>Campaign</h2>
+  {{ theCampaign }}
+</div>
+
+<div class="col-md-4">
+  <h1>Heroes</h2>
+  {{ theHeroes }}
+</div>
+
+<div class="col-md-4">
+  <h1>Gear</h2>
+  {{ theGear }}
+</div>
+
+<div class="col-md-4">
+  <h1>Skills</h2>
+  {{ theSkills }}
+</div>
+
+<div class="col-md-4">
+  <h1>Empire</h2>
+  {{ theEmpire }}
+</div>
+
+<div class="col-md-4">
+  <h1>Empire Skills</h2>
+  {{ theESkills }}
+</div>
+{% endblock %}
+

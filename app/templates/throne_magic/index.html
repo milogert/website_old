@@ -1,0 +1,46 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Throne Magic{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <div class="jumbotron">
+    <h1>Welcome to Throne Magic</h1>
+
+    <p>Throne Magic is a casual variant where you assume the role of a medieval character in an epic power struggle against your mortal enemies! Play as The King, The Userper's Bannermen, or even the Dragon!</p>
+
+    <p>A Magic: The Gathering variant created by the now-defunct Magic Lampoon. Still viewable on the <a href="https://web.archive.org/web/20131013111851/http://magiclampoon.com/blog/throne-magic/">Wayback Machine</a>!</p>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="text-center">
+    <a class="btn btn-primary btn-lg" role="button" href="{{ url_for('.rules') }}">Learn the rules</a>
+  </div>
+
+  <hr />
+
+  <p>Learn the ins and outs of Throne Magic with these comprehensive rules!</p>
+
+</div>
+
+<div class="col-md-4">
+  <div class="text-center">
+    <a class="btn btn-primary btn-lg  text-center" role="button" href="{{ url_for('.rolesPrimer') }}">Select roles</a>
+  </div>
+
+  <hr />
+
+  <p>Grab some friends and <a href="{{ url_for('.rolesBasic') }}">pick your roles</a>! Or, if you are feeling adventerous, <a href="{{ url_for('.rolesDraft') }}">draft them</a>! Or if you want explosive wins, <a href="{{ url_for('.rolesRandom') }}">assign them randomly</a>.</p>
+</div>
+
+<div class="col-md-4">
+  <div class="text-center">
+    <a class="btn btn-primary btn-lg" role="button" href="{{ url_for('.advancedRules') }}">Add advance rules</a>
+  </div>
+
+  <hr />
+
+  <p>After you have played a couple games, add some advanced rules like <a href="{{ url_for('.compHoldings') }}">holdings</a> or <a href="{{ url_for('.compSeasons') }}">seasons</a>!</p>
+</div>
+{% endblock %}

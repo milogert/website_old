@@ -1,0 +1,27 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Seasons{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h2>Seasons</h2>
+
+  <p>These are used to denote seasons. Feel free to modify them to fit your playgroup better. The rules for seasons are found <a href="{{ url_for('throne_magic.rules') + '#Seasons'}}">here</a>.</p>
+</div>
+
+{% for aSeason in theSeasons %}
+  <div class="col-md-3">
+    <div class="well">
+      <img src="{{ url_for('static', filename='throne_magic/img/seasons/' + aSeason + '.gif') }}">
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

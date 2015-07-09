@@ -1,0 +1,25 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Draft{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h2>Role Drafting</h2>
+</div>
+
+{% for aThrone in theThrones %}
+  <div class="col-md-3">
+    <div class="well">
+      <img src="{{ url_for('static', filename='throne_magic/img/thrones/' + aThrone + '.gif') }}">
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

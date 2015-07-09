@@ -1,0 +1,36 @@
+{% extends "iacl/slayout.html" %}
+
+{% block title %}Imperial Assault Campaign Log{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <div class="row">
+    <form method="post" action="/games/iacl/new">
+      <div class="col-md-12">
+        {{ form_field(theSetup.name, with_label=True) }}
+      </div>
+
+      <div class="col-md-6">
+        {{ form_field(theSetup.heroes, with_label=True, size=5) }}
+        {{ form_field(theSetup.missions, with_label=True, size=8) }}
+      </div>
+
+      <div class="col-md-6">
+        {{ form_field(theSetup.imperialClasses, with_label=True) }}
+        {{ form_field(theSetup.agendas, with_label=True, size=10) }}
+      </div>
+
+      <div class="col-md-12">
+        <button class="btn btn-success btn-lg btn-block">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

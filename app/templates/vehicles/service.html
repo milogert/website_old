@@ -1,0 +1,64 @@
+{% extends "vehicles/slayout.html" %}
+
+{% block title %}Vehicle Service Records{% endblock %}
+
+{% block css %}
+<style>
+  .clickable-row {
+    cursor: pointer;
+  }
+
+  .description {
+    white-space: pre;
+  }
+</style>
+{% endblock %}
+
+{% block js %}
+<script>
+  $(function() {
+    $(".clickable-row").on("click", function() {
+      var aUrl = $(this).data("href");
+
+      $("#holder").animate({
+        right: "100%",
+      }, 200);
+
+      $("#holder").promise().done(function() {
+        window.document.location = aUrl;
+      });
+    });
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12" id="holder">
+  <h1>Vehicle Service Records</h1>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th style="width: 13%;">Date</th>
+          <th style="width: 20%;">Vehicle</th>
+          <th style="width: 10%;">Miles</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for aRecord in theRecords %}
+          <tr class="clickable-row" data-href="{{ url_for("vehicles.specificRecord", theId=aRecord.id) }}">
+            <td>{{ aRecord.date }}</td>
+            <td>{{ aRecord.vehicle }}</td>
+            <td>{{ aRecord.miles }}</td>
+            <td class="description">{{ aRecord.description }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

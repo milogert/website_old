@@ -1,3 +1,10 @@
+# Special files
+config.py
+mtgsearch/
+resume*.*
+!resume.tex
+.*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

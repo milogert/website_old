@@ -1,0 +1,40 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Basic{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+
+<script>
+  $(function() {
+    $("button#random").on("click", selectRandom);
+  })
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h2>Random Setup</h2>
+  <p>Placeholder text.</p>
+
+  <form class="form-inline" role="form">
+    <div class="form-group">
+      <label class="sr-only" for="number">Number of Players</label>
+      <input type="number" class="form-control" id="players" placeholder="#" name="players">
+    </div>
+    <button id="random" type="button" class="btn btn-default">Roll!</button>
+  </form>
+</div>
+
+<div class="col-md-12">
+  <div class="row" id="holder"></div>
+</div>
+{% endblock %}

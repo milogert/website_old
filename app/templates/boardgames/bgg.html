@@ -1,0 +1,259 @@
+{% extends "boardgames/slayout.html" %}
+
+{% block title %}Boardgames{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+<style>
+  td, th {
+    vertical-align: middle !important;
+  }
+</style>
+{% endblock %}
+
+{% block js %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script>
+  $(function() {
+
+    $(".add-play").on("click", function() {
+      // Get the appropriate values.
+      var aRow = $(this).closest('tr');
+      var aId = $(aRow).data("id");
+      var aPlaysEle = $(aRow).find('.plays');
+      var aPlays = parseInt(aPlaysEle.text());
+      var aLeftEle = $(aRow).find('.plays-left');
+      var aLeft = parseInt(aLeftEle.text());
+
+      // Update the view.
+      $(aRow).find('.plays').text(aPlays + 1);
+
+      // Check for how many plays are left.
+      if(aLeft - 1 <= 0) {
+        // Set the count left to 0.
+        $(aRow).find('.plays-left').text(0);
+
+        // Remove the class of the row.
+        $(aRow).removeClass('success');
+      } else {
+        var aVal = $(aRow).find('.plays-left').text();
+
+        if(!(isNaN(aVal))) {
+          $(aRow).find('.plays-left').text(aLeft - 1);
+        }
+      }
+
+      // Get the update values.
+      aPlays = parseInt(aPlaysEle.text());
+      aLeft = parseInt(aLeftEle.text());
+
+      // console.log(aRow.find(".name").text() + " " + aPlays + " " + aNext + " " + aLeft);
+
+      aDict = {
+        "id": aId,
+        "plays": aPlays,
+        "playsLeft": aLeft
+      }
+
+      // Send the new values to the server.
+      $.ajax({
+        type: "POST",
+        url: "/games/bg/addPlay",
+        contentType: "application/json",
+        data: JSON.stringify(aDict),
+        success: function(response, status, xhr) {
+          // Reload the page.
+          // location.reload(true);
+        }
+      });
+    });
+
+    $("#new").on("click", function() {
+      // Create a new json dictionary.
+      var aDict = {};
+      var aValid = true;
+
+      $("#new-game").find("input, select").each(function(i, v) {
+        // Append the new item to the dictionary.
+        if($(v).attr("name")) {
+          var aKey = $(v).attr("name");
+          var aVal = $(v).val();
+          if(aVal || $(v).is(":checkbox")) {
+            if($(v).is(":checkbox")) {
+              aDict[aKey] = (aVal == 'y' ? true : false);
+            } else if(isNaN(aVal)) {
+              aDict[aKey] = aVal;
+            } else {
+              aDict[aKey] = parseFloat(aVal);
+            }
+          } else {
+            $("#new-game").addClass('danger');
+            aValid = false;
+          }
+        }
+      });
+
+      if(aValid) {
+        console.log(aDict);
+        console.log(JSON.stringify(aDict));
+
+        // Send the dictionary to the server.
+        $.ajax({
+          type: "POST",
+          url: "/games/bg/newGame",
+          data: {
+            json: JSON.stringify(aDict)
+          },
+          success: function(response, status, xhr) {
+            // Reload the page.
+            location.reload(true);
+          }
+        });
+      } else {
+        // Exit.
+        console.log("ii Error in entry.");
+      }
+    });
+
+    $(".status").on("change", function() {
+      var aRow = $(this).closest('tr');
+      var aId = $(aRow).data("id");
+      var aCurrent = $(aRow).data("status");
+
+      var aDict = {};
+      aDict["id"] = aId;
+
+      // Change values, depending upon what we want to do.
+      if(this.value == "Default" && this.value != aCurrent) {
+        // Set Plays Left to 0.
+
+        aDict["playsLeft"] = 0;
+      } else if(this.value == "Play Next" && this.value != aCurrent) {
+        // Set Plays Left to 3.
+
+        aDict["playsLeft"] = 3;
+      } else if(this.value == "Has Not Arrived" && this.value != aCurrent) {
+        // Set Plays Left to 0.
+
+        aDict["playsLeft"] = 0;
+      } else {
+        exit();
+      }
+
+      aDict["status"] = this.value;
+
+      // Send to server.
+      $.ajax({
+        type: "POST",
+        url: "/games/bg/updateStatus",
+        contentType: "application/json",
+        data: JSON.stringify(aDict),
+        success: function(response, status, xhr) {
+          toastr.success("Updating the status of the game.");
+          // Reload the page.
+          location.reload(true);
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h1>Boardgame Plays</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p>This is a table of my boardgame prices as well as plays, average play time, and cost in dollars per hour.</p>
+
+      <p>I also keep track of which games I want to play next and how many plays I want to get on those games.</p>
+
+      <p>Look to the right to see how I have organized the chart.</p>
+    </div>
+
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-success">Green ones are on the docket next.</li>
+        <li class="list-group-item">Plain ones are just other games I own.</li>
+        <li class="list-group-item list-group-item-danger">Red ones are ones that I have purchased but have not arrived (Kickstarter, preorders, etc.)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <tr>
+          <th>Game</th>
+          <th style="width: 15%;">Acquired</th>
+          <th style="width: 12%;">Cost</th>
+          <th style="width: 10%;">Plays</th>
+          <th style="width: 10%;">Avg Play Time</th>
+          <th>Cost/Hour</th>
+          {% if session["username"] == "milo" %}<th></th>{% endif %}
+          <th style="width: 5%;">Plays Left?</th>
+          {% if session["username"] == "milo" %}<th>Status</th>{% endif %}
+        </tr>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for aBoardgame in theBoardgames %}
+          <tr class="{{ 'success' if aBoardgame.status == 'Play Next' }} {{'danger' if aBoardgame.status == 'Has Not Arrived' }}" data-id="{{ aBoardgame.id }}" data-status="{{ aBoardgame.status }}">
+            <th class="name">{{ aBoardgame.name }}</th>
+            <td>{{ aBoardgame.acquired }}</td>
+            <td>${{ "{:.2f}".format(aBoardgame.cost) }}</td>
+            <td class="plays">{{ aBoardgame.plays }}</td>
+            <td class="average-time">{{ aBoardgame.averageTime }}</td>
+            <td>
+              {% if aBoardgame.plays * aBoardgame.averageTime > 0 %}
+                ${{ "{:.2f}".format(aBoardgame.cost / (aBoardgame.plays * aBoardgame.averageTime)) }}
+              {% else %}
+                N/A
+              {% endif %}
+            </td>
+            {% if session["username"] == "milo" %}
+              <td><button class="btn btn-primary add-play"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>
+            {% endif %}
+            <td class="plays-left">{{ "N/A" if aBoardgame.playsLeft < 1 else aBoardgame.playsLeft }}</td>
+            {% if session["username"] == "milo" %}
+              <td class="status">{{ form_field(theExistingGameForm.status, class_="status") }}</td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+
+        {% if session["username"] == "milo" %}
+          <tr id="new-game">
+            <td>{{ form_field(theNewGameForm.name) }}</td>
+            <td>{{ form_field(theNewGameForm.acquired) }}</td>
+            <td>{{ form_field(theNewGameForm.cost, prefix="$") }}</td>
+            <td>{{ form_field(theNewGameForm.plays, value=0, disabled=True) }}</td>
+            <td>{{ form_field(theNewGameForm.averageTime) }}</td>
+            <td></td>
+            <td><button class="btn btn-default" id="new"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>
+            <td>???</td>
+            <td>{{ form_field(theNewGameForm.status) }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>Average Cost/Hour:</th>
+          <th>${{ "{:.2f}".format(theAvg) }}</th>
+          <td></td>
+          {% if session["username"] == "milo" %}<td></td><td></td>{% endif %}
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+{% endblock %}

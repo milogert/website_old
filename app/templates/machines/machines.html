@@ -1,0 +1,56 @@
+{% extends "machines/slayout.html" %}
+
+{% block title %}Machine Specs{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    margin: auto;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h1>System Specs</h1>
+
+  <p>A list of systems I currently use and older systems I either no longer use or have been retired.</p>
+
+  {% for aMachine, aSpecs in theMachines.iteritems() %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">{{ aMachine }}</h2>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><img src="{{ url_for('static', filename='personal/img/' + aMachine + '.jpg') }}" /></div>
+        <div class="col-md-9">
+          {% for k, v in aSpecs.iteritems() %}
+            <h3>{{ k }}</h3>
+
+            {% if v %}
+              <table class="table table-striped"><tbody>
+                {% for aCol in v[0].__table__.columns.keys() %}
+                  {% if v[0][aCol] and aCol not in ("id", "name") %}
+                    <tr>
+                      <th>{{ aCol.title() }}</th>
+                      {% for i in v %}
+                        <td>{{ i[aCol] }}</td>
+                      {% endfor %}
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody></table>
+            {% else %}
+              <p>N/A</p>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,28 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Draft{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h2>Role Drafting</h2>
+  <p>This is for drafting roles. First, you pick a role, then the disabled roles will be dimmed and highlighted in red. Available roles are highlighted in blue, and selected roles are highlighted in green as well as listed below.</p>
+
+  <ul class="breadcrumb list-inline" id="roles"></ul>
+</div>
+
+{% for aRole in theRoles %}
+  <div class="col-md-3">
+    <div class="alert alert-info">
+      <img class="available" id="{{ loop.index - 1 }}" src="{{ url_for('static', filename='throne_magic/img/roles/' + aRole + '.jpg') }}" role="{{ aRole }}">
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

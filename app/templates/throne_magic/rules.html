@@ -1,0 +1,97 @@
+{% extends "throne_magic/slayout.html" %}
+
+{% block title %}Rules{% endblock %}
+
+{% block css %}
+<style>
+  img {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-3">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#Role_Cards">Role Cards</a></li>
+    <li><a href="#Leaving_the_Game">Leaving the Game</a></li>
+    <li><a href="#Throne_Cards">Throne Cards</a></li>
+    <li><a href="#Attacking_the_Throne">Attacking the Throne</a></li>
+    <li><a href="#Taking_the_Throne">Taking the Throne</a></li>
+    <li><a href="#Controlling_the_Throne">Controlling the Throne</a></li>
+    <li><a href="#Throne_Abilities">Throne Abilities</a></li>
+    <li><a href="#Abandoned_Thrones">Abandoned Thrones</a></li>
+    <li><a href="#Winning_the_Game">Winning the Game</a></li>
+    <li><a href="#Giving_Creatures_to_the_Monarch">Giving Creatures to the Monarch</a></li>
+    <li><a href="#The_Monarch_Distributing_Creatures">The Monarch Distributing Creatures</a></li>
+    <li><a href="#Public_and_Private_Information">Public and Private Information</a></li>
+    <li><a href="#Choosing_Role_Cards_for_the_Game">Choosing Role Cards for the Game</a></li>
+    <li><a href="#Choosing_a_Throne_Card_for_the_Game">Choosing a Throne Card for the Game</a></li>
+    <li><a href="#Holdings">Holdings</a></li>
+    <li><a href="#Seasons">Seasons</a></li>
+  </ol>
+</div>
+
+<div class="col-md-9">
+  <h2>Rules</h2>
+
+  <p>These are the rules for Throne Magic. With the exception of these, it is a normal Magic game.</p>
+
+  <p>Disclaimer: This text has been copied from the Magic Lampoon page on the Wayback Machine <a href="https://web.archive.org/web/20131013111851/http://magiclampoon.com/blog/throne-magic/">here</a>. They seem to have shut down or something, so I wanted to create a more accessible page.</p>
+
+  <ol>
+    <li><span class="label label-default" id="Role_Cards">Role Cards</span> Before play, each player receives a Role card. The Role card tells the player how he or she wins the game. Winning the game involves eliminating specific other Roles from the game (or having someone else do the eliminating for you). Role cards are secret while their holders are alive, unless a Role card says otherwise.</li>
+    <li><span class="label label-default" id="Leaving_the_Game">Leaving the Game</span> A player who leaves the game reveals his or her Role card at that time. This may (and often does) cause someone to win the game.</li>
+    <li><span class="label label-default" id="Throne_Cards">Throne Cards</span> In the game, there is a new permanent type, Throne. The game uses one Throne. The Throne itself is unaffected by any game effect except combat damage. The Throne cannot leave play, it cannot be tapped, it cannot be targeted or affected by any spell or ability, and so on. The Throne may have a controller, but unlike other permanents, does not have to have a controller. If The King is one of the Roles in the game, The King begins the game controlling the Throne. Otherwise, no one controls the Throne at the start of the game.</li>
+    <li><span class="label label-default" id="Attacking_the_Throne">Attacking the Throne</span> The Throne may be attacked, in the way that a Planeswalker may be attacked. The controller of the Throne may use his or her creatures to block for the Throne, just as the controller of a Planeswalker being attacked may use creatures to block. The Throne does not have to have a controller — if it is attacked when it has no controller, no one may block for it, and there is no defending player against those particular attacking creatures.</li>
+    <li><span class="label label-default" id="Taking_the_Throne">Taking the Throne</span> If the Throne is dealt 1 or more points of combat damage, the controller of the source of that damage may gain control of the Throne if, and only if, the Role card of the controller of the source of damage has the type Claimant. The Claimant does not reveal his or her Role — he or she simply announces having earned the Throne and takes it. Taking the Throne does not use the stack.</li>
+    <li><span class="label label-default" id="Controlling_the_Thron">Controlling the Throne</span> If the controller of the source of combat damage to the Throne is not a Claimant, or is a Claimant but does not wish to control the Throne, he or she puts the Throne in the middle of the table, where it is now uncontrolled. (Note that it is incumbent upon non-Claimant players under the honor system not to gain control of the Throne, since Roles are secret. In short — Claimants may lie and decline The Throne, but non-Claimants cannot lie and take the Throne.)</li>
+    <li><span class="label label-default" id="Throne_Abilities">Throne Abilities</span> The Throne typically has an ability. For example, The Throne of the Ancient Kings has a life-gain ability — at the beginning of his or her upkeep, the controller of the Throne may gain 1 life for each player still playing. This ability uses the stack and can be affected by things that affect abilities, such as Stifle or Rain of Gore. Other Thrones have different triggered abilities, or static abilities.</li>
+    <li><span class="label label-default" id="Abandoned_Thrones">Abandoned Thrones</span> If the controller of the Throne leaves the game without the Throne simultaneously being dealt combat damage, the Throne becomes uncontrolled and goes to the middle of the table.</li>
+    <li><span class="label label-default" id="Winning_the_Game">Winning the Game</span> A player wins if the correct other players leave the game. Because of the particular nature of the Roles, a player might lose the game despite not being eliminated. A player may also win by being the only player remaining if no one has managed to win before that time. (Some Roles do not have win conditions — those Roles must eliminate all other players.)</li>
+    <li><span class="label label-default" id="Giving_Creatures_to_the_Monarch">Giving Creatures to the Monarch</span> All creatures in Throne Magic have “T: The controller of the Throne may gain control of this creature.” Note that this is a creature ability and can be removed by things that remove abilities, and may only be activated by the controller of the creature. The controller of the Throne decides whether to accept the creature when the ability resolves.</li>
+    <li><span class="label label-default" id="The_Monarch_Distributing_Creatures">The Monarch Distributing Creatures</span> All creatures in Throne Magic also have “T: Target player may gain control of this creature. Activate this ability only if you control the Throne.” The targeted player decides whether to accept the creature when the ability resolves.</li>
+    <li><span class="label label-default" id="Public_and_Private_Information">Public and Private Information</span> It is public information which Roles are present in the current game. However, it is non-public information who has which Role. Roles for a game must be selected in an open way. After the Roles are selected, turn the Roles face-down, shuffle them and deal one to each player randomly. (Players must know which Roles are in the game so players will know when they’ve won.) Role cards not being used, and Role cards of eliminated players, should be placed where everyone may see them so that it remains public information which Roles remain in the game. Players cannot reveal their Role cards to other players apart from the other rules above.</li>
+    <li><span class="label label-default" id="Choosing_Role_Cards_for_the_Game">Choosing Role Cards for the Game</span> There are four methods for choosing which Role cards will be in the game. Players must agree on a method:
+      <ol>
+        <li>Basic Game (basic, four to seven players): First choose The King, The Usurper, the King’s Bannerman and the Usurper’s Bannerman. If there is a fifth player, add the Dragon. If there is a sixth player, add the Barbarian. If there is a seventh player, add the Wizard. (It is highly recommended that this method be used for the first several games.)</li>
+        <li>Draft (advanced, four or more players): Roll dice to determine who chooses first. Each player in turn chooses a Role card to be in the game. (This doesn’t mean that that player will necessarily get that Role.) The first player chooses any Role. The second player must choose a Role such that the first and second Role must eliminate each other. The third player chooses a Role that must eliminate one of the first two, and must be eliminated by one of the first two. Continue choosing Roles that have to eliminate and be eliminated by one of the previous Roles until each player has chosen a Role for the game. (Note: Volatile selections can result where some players are “Deadly” because they only have one other player to eliminate. Also, lopsided builds can result where some “factions” outnumber the others. Do not allow the Angel in the game unless there is another Good role.)</li>
+        <li>Random (advanced and chaotic, four or more players): Randomly determine the first Role. Randomly determine the second Role, but only from among those Roles that must eliminate the first Role and must be eliminated by the first Role. Randomly determine the third Role from among those Roles that must eliminate one of the first two Roles and must be eliminated by one of the first two Roles. Continue choosing Roles that have to eliminate and be eliminated by one of the previous Roles until there is one Role for each player. (Note: Volatile selections can result where some players are “Deadly” because they only have one other player to eliminate. Also, lopsided builds can result where some “factions” outnumber the others. Do not allow the Angel in the game unless there is another Good role.)</li>
+        <li>Method Four, Sculpted (very advanced, four or more players): One or more players design the game by choosing Roles deliberately. Be sure that each Role has other Roles that it must eliminate. (Note: Volatile selections can result where some players are “Deadly” because they only have one other player to eliminate. Also, lopsided builds can result where some “factions” outnumber the others. Do not allow the Angel in the game unless there is another Good role.)</li>
+      </ol>
+
+      All Roles not in the current game, and all eliminated Roles, should be put face-up in the middle of the table so that everyone can remind himself or herself which Roles remain.
+    </li>
+    <li><span class="label label-default" id="Choosing_a_Throne_Card_for_the_Game">Choosing a Throne Card for the Game</span> There are three methods for choosing which Throne to use in the game. Players must agree on a method:
+      <ul>
+        <li>Random</li>
+        <li>The King chooses at the start of the game</li>
+        <li>Players agree on a particular Throne</li>
+      </ul>
+    </li>
+    <li><span class="label label-default" id="Holdings">Holdings</span> <span class="label label-danger">Advanced</span> Holdings are locations that players may control. They work much like the Throne — only combat damage affects them. However, any player may control Holdings. A player doesn’t have to be a Claimant to control a Holding. Holdings are an advanced rule set. Players should try playing without them at first.
+      <ul>
+        <li>In the game, there is a new permanent type, Holding. A Holding itself is unaffected by any game effect except combat damage. A Holding cannot leave play, it cannot be tapped, it cannot be targeted or affected by any spell or ability, and so on. A Holding may have a controller, but unlike other permanents, does not have to have a controller. No one controls any Holdings at the start of the game.</li>
+        <li>A Holding may be attacked, in the way that a Planeswalker may be attacked. The controller of a Holding may use his or her creatures to block for the Holding, just as the controller of a Planeswalker being attacked may use creatures to block. A Holding does not have to have a controller — if it is attacked when it has no controller, no one may block for it, and there is no defending player against those particular attacking creatures.</li>
+        <li>If a Holding is dealt 1 or more points of combat damage, the controller of the source of that damage may gain control of that Holding. Taking a Holding does not use the stack.</li>
+        <li>If the controller of the source of combat damage to a Holding does not wish to control the Holding, he or she puts the Holding in the middle of the table, where it is now uncontrolled. A player does not have to be a Claimant to control a Holding.</li>
+        <li>Holdings have abilities. For example, Esseldell has a triggered ability — at the beginning of Esseldell’s controller’s upkeep, that player may gain 2 life. This ability uses the stack and can be affected by things that affect abilities, such as Stifle or Rain of Gore. Other Holdings have different triggered abilities, or static abilities.</li>
+        <li>If the controller of a Holding leaves the game without the Holding simultaneously being dealt combat damage, the Holding becomes uncontrolled and goes to the middle of the table.</li>
+        <li>The game uses a number of Holdings equal to the initial number of players, or uses all 10 Holdings if there are more than 10 players. Players should determine randomly which Holdings are to be used. Those Holdings begin the game uncontrolled. The other Holdings are not part of the game and are set aside.</li>
+      </ul>
+    </li>
+    <li><span class="label label-default" id="Seasons">Seasons</span> <span class="label label-danger">Advanced</span> In Throne Magic, it is always considered to be a certain Season. There are four Season cards. The game begins in Spring, and the Seasons will cycle through as players leave the game. The Season cards affect the entire table, and nothing can affect or stop the Season cards. Seasons are an advanced rule set. Players should try playing without them at first.
+      <ul>
+        <li>At all times, one Season card is in effect. The game begins in Spring. Spring has no special effect.</li>
+        <li>Seasons change between player turns. Each time a player would have an untap step, check to see if the Season changes to the next Season.</li>
+        <li>A Season changes to the next Season if one or more players left the game during the previous turn.</li>
+        <li>Even if several players left the game during the previous turn, the Season only cycles to the very next Season. Seasons do not cycle more than one even if several players left the game.</li>
+        <li>The Seasons change in order, from Spring to Summer to Autumn to Winter. After Winter comes another Spring, and so on.</li>
+        <li>Season cards themselves cannot be affected by anything. Nothing in the game prevents the changing of the Seasons. Autumn has a triggered ability — the ability can be Stifled and so on. But the card itself is immune to all game effects.</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+{% endblock %}

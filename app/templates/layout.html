@@ -1,0 +1,228 @@
+{% macro form_field(field) -%}
+  {% set with_label = kwargs.pop('with_label', False) %}
+  {% set placeholder = '' %}
+
+  {% if not with_label %}
+    {% set placeholder = field.label.text %}
+  {% endif %}
+
+  <div class="form-group {% if field.errors %}error{% endif %}">
+    {% if with_label %}
+      <label for="{{ field.id }}" class="control-label">
+        {{ field.label.text }}{% if field.flags.required %} *{% endif %}:
+      </label>
+    {% endif %}
+
+    {% set class_ = kwargs.pop('class_', '') %}
+
+    {% if field.flags.required %}
+      {% set class_ = class_ + ' required' %}
+    {% endif %}
+
+    {% set prefix = kwargs.pop('prefix', '') %}
+    {% set postfix = kwargs.pop('postfix', '') %}
+
+    {% if prefix or postfix %}
+      <div class="input-group">
+    {% endif %}
+
+    {% if prefix %}
+      <div class="input-group-addon">{{ prefix }}</div>
+    {% endif %}
+
+    {% if field.type in 'BooleanField' %}
+      <label class="checkbox">
+        {{ field(class_=class_, **kwargs) }}
+
+        {% if with_label %}
+          {{ field.label.text|safe }}
+        {% endif %}
+      </label>
+    {% elif field.type == "RadioField" %}
+      {% for subfield in field %}
+        <div class="radio">
+          <label>
+            {{ subfield(**kwargs) }}
+
+            {{ subfield.label.text | safe }}
+          </label>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% set class_ = class_ + ' form-control' %}
+
+      {% if field.type in ('TextField', 'TextAreaField', 'PasswordField') %}
+        {% set class_ = class_ + ' input-xlarge' %}
+      {% elif field.type == 'FileField' %}
+        {% set class_ = class_ + ' input-file' %}
+      {% endif %}
+
+      {% if field.type == "SelectField" %}
+        {{ field(class_=class_, placeholder=placeholder, default=2, **kwargs) }}
+      {% else %}
+        {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
+      {% endif %}
+    {% endif %}
+
+    {% if postfix %}
+      <div class="input-group-addon">{{ postfix }}</div>
+    {% endif %}
+
+    {% if prefix or postfix %}
+      </div>
+    {% endif %}
+
+    {% if field.errors %}
+      <span class="error help-inline">{{ field.errors|join(', ') }}</span>
+    {% endif %}
+
+    {% if field.description %}
+      <p class="help-block">{{ field.description|safe }}</p>
+    {% endif %}
+  </div>
+{%- endmacro %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %} - milogert.com</title>
+
+    <!-- Latest compiled and minified CSS -->
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    {% if debug() %}
+      <style type="text/css">
+        {% set c = ipColor() %}
+        .color-bar {
+          background-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, 1);
+          height: 20px;
+        }
+        .navbar-default, .navbar-default .navbar-collapse {
+          background-color: transparent;
+          border-color: transparent;
+        }
+      </style>
+    {% endif %}
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    {% block js %}{% endblock %}
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    {# <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon"> #}
+    {# <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon"> #}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="color-bar"></div>
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('personal.index') }}">$1@$1$2.com</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resume <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                {# <li><a href="/resume/view">Web</a></li> #}
+                <li><a href="{{ url_for('personal.resumePdf') }}">PDF</a></li>
+                <li><a href="{{ url_for('static', filename='personal/resume/resume.tex')     }}">Source</a></li>
+              </ul>
+            </li>
+            {% block navbar %}{% endblock %}
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ url_for('boardgames.index') }}">Boardgame Tracker</a></li>
+                <li><a href="{{ url_for('personal.index') }}">Home Page</a></li>
+                <li><a href="{{ url_for('iacl.index') }}">Imperial Assault Campaign Log</a></li>
+                <li><a href="{{ url_for('machines.index') }}">Machines</a></li>
+                <li><a href="{{ url_for('throne_magic.index') }}">Throne Magic</a></li>
+              </ul>
+            </li>
+
+            <li><a href="{{ url_for('personal.contact') }}">Contact</a></li>
+
+            {% if session["username"] == "milo"%}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Personal <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li role="presentation" class="dropdown-header">Tools</li>
+                  <li><a href="//adminer.milogert.com">Adminer</a></li>
+                  <li><a href="//sync.milogert.com">Syncthing</a></li>
+                  <li><a href="//rss.milogert.com">Tiny-Tiny RSS</a></li>
+                  <li role="presentation" class="dropdown-header">Personal</li>
+                  <li><a href="{{ url_for('auth.getSession') }}">Session Check</a></li>
+                  <li><a href="{{ url_for('personal.games') }}">Games</a></li>
+                  <li role="presentation" class="dropdown-header">Usenet</li>
+                  <li><a href="//milogert.com:6789">NZBGet</a></li>
+                  <li><a href="//sonarr.milogert.com">Sonarr</a></li>
+                  <li><a href="//couchpotato.milogert.com">Couchpotato</a></li>
+                </ul>
+              </li>
+              <!-- <li><p class="navbar-text">{{ session["username"] }}</p></li> -->
+              <li><a href="{{ url_for('auth.signout') }}">Sign Out</a></li>
+            {% else %}
+              <li><a href="{{ url_for('auth.signin') }}">Sign In</a></li>
+            {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+
+      <div class="row">
+        {% block content %}{% endblock %}
+        <br>
+      </div>
+    </div>
+
+    <!-- Footer. -->
+    <footer class="footer">
+      <div class="container">
+        <hr />
+        <p>Created by Milo Gertjejansen. <a href="/contact">Contact</a>.</p>
+        <p>Made with: <a href="//flask.pocoo.org/">Flask</a>, <a href="//getbootstrap.com">Bootstrap</a>, <a href="//jquery.com">jQuery</a>.</p>
+        <p id="date"></p>
+      </div>
+    </footer>
+
+    <script>
+      $(function() {
+        if(new Date().getFullYear() > 2010) {
+          $("#date").text("\u00A9 2010 - " + new Date().getFullYear());
+        }
+      });
+    </script>
+  </body>
+</html>
