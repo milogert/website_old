@@ -4,26 +4,14 @@
 
 {% block content %}
 <div class="col-sm-9">
-  <h2>Contact</h2>
+  <h1>Contact</h1>
   <p>If you have any questions about the site including design choices or source code questions, shoot me an email with the form below or, if you prefer using your own email, then my address is on the right.</p>
   <form role="form" role="form" action="#" method="post">
-    <div class="row">
-      <div class="form-group col-md-6">
-        <label for="name">Your name</label>
-        <input type="text" class="form-control" id="name" placeholder="Name" name="name">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="email">Your email</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" name="email">
-      </div>
-      <div class="form-group col-md-12">
-        <label for="message">Your message</label>
-        <textarea class="form-control" rows="7" id="message" name="message"></textarea>
-      </div>
-      <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-default">Send email</button>
-      </div>
-    </div>
+    {{ theForm.csrf_token }}
+    {{ form_field(theForm.name, with_label=True) }}
+    {{ form_field(theForm.email, with_label=True) }}
+    {{ form_field(theForm.message, with_label=True, rows="6") }}
+    <button class="btn btn-default" type="submit">Submit</button>
   </form>
 </div>
 

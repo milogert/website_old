@@ -17,8 +17,8 @@
     <tbody>
       {% for aGame in theGames %}
         <tr>
-          <td>{{ aGame[1] }}</td>
-          <td>{{ aGame[2] }}</td>
+          <td>{{ aGame.name }}</td>
+          <td>{{ aGame.game_key }}</td>
         </tr>
       {% endfor %}
     </tbody>

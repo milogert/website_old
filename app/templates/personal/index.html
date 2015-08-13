@@ -14,13 +14,13 @@
 
     <p>If you want to contact me, you can use my <a href="{{ url_for('.contact') }}">contact page</a> or you can email me directly at <a href="mailto:milo@milogert.com">milo@milogert.com</a>.
 
-    <p>If you would like to see my resume, you have a few options: (1) View it natively on the web (not ready yet!), (2) <a href="{{ url_for('.resumePdf') }}">view a PDF</a>, or (3) <a href="{{ url_for('static', filename='resume/resume.tex') }}">download the LaTeX source</a>. If you have any questions about my resume feel free to contact me.</p>
+    <p>If you would like to see my resume, you have a few options: (1) <a href="{{ url_for('resume.index') }}">view it natively on the web</a>, (2) <a href="{{ url_for('resume.generate') }}">view a PDF</a>, or (3) <a href="{{ url_for('static', filename='resume/resume.tex') }}">download the LaTeX source</a>. If you have any questions about my resume feel free to contact me.</p>
 
     <p>If you are interested in the source for this site, I am working on getting it up on GitHub, as I didn't start it there. In the interim, email me specific questions and I will answer them to the best of my ability.</p>
   </div>
 
   <div class="col-sm-3 hidden-xs">
-    <img src="{{ url_for('static', filename='personal/img/milo_gertjejansen.jpg') }}" class="img-responsive">
+    <img src="{{ cdn('img', 'personal/milo_gertjejansen.jpg') }}" class="img-responsive">
   </div>
 {% endblock %}
 
