@@ -7,7 +7,7 @@ from flask import Blueprint, request, render_template, flash, g, session, \
 from werkzeug import check_password_hash, generate_password_hash
 
 # Import the database object from the main app module
-from app import db#, redirect_back, get_redirect_target
+from app import db
 
 # Import module forms
 from app.mod_auth.forms import LoginForm
@@ -18,6 +18,11 @@ from app.mod_auth.models import User
 # Define the blueprint: 'auth', set its url prefix: app.url/auth
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
 
+
+@mod_auth.before_request
+def requireAuth():
+  if "valid" in session and session["valid"] is True:
+    redirect(url_for("personal.index"))
 
 # Set the route and accepted methods
 @mod_auth.route('/signin/', methods=['GET', 'POST'])
@@ -50,6 +55,10 @@ def signin():
 
 @mod_auth.route("/signout/")
 def signout():
+  # Check to make sure we have a session to even sign out from.
+  if ("valid" in session and session["valid"] == False) or "valid" not in session:
+    return redirect(url_for("auth.signin"))
+
   # Flash a message.
   flash("Goodbye, {}".format(session["username"]), "success")
 

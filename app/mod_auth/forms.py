@@ -3,6 +3,7 @@ from flask.ext.wtf import Form
 
 # Import Form elements such as TextField and BooleanField (optional)
 from wtforms import TextField, PasswordField
+from wtforms.validators import Required
 
 class LoginForm(Form):
     username = TextField(
