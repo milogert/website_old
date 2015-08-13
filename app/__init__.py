@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, send_from_directory
 
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.mail import Mail
 from flask.ext.wtf import CsrfProtect
 
 # Create the application.
@@ -11,6 +12,9 @@ app.config.from_object("config")
 
 # Enable the SQLAlchemy database.
 db = SQLAlchemy(app)
+
+# Setup mailer.
+mailer = Mail(app)
 
 # Setup CSRF protection (for forms).
 csrf = CsrfProtect(app)
@@ -40,6 +44,7 @@ from app.mod_boardgames.controllers import mod_boardgames as boardgames_module
 from app.mod_iacl.controllers import mod_iacl as iacl_module
 from app.mod_machines.controllers import mod_machines as machines_module
 from app.mod_personal.controllers import mod_personal as personal_module
+from app.mod_resume.controllers import mod_resume as resume_module
 from app.mod_throne_magic.controllers import mod_throne_magic as throne_magic_module
 from app.mod_vehicles.controllers import mod_vehicles as vehicles_module
 
@@ -49,23 +54,33 @@ app.register_blueprint(boardgames_module)
 app.register_blueprint(iacl_module)
 app.register_blueprint(machines_module)
 app.register_blueprint(personal_module)
+app.register_blueprint(resume_module)
 app.register_blueprint(throne_magic_module)
 app.register_blueprint(vehicles_module)
 
+# Create the databases.
+db.create_all()
 
-## Template functions. ########################################################
 
 # Get the ip address for the colored navbar.
 @app.template_global("ipColor")
 def ipColor():
   # Get the ip address of the client.
-  ip = request.environ['REMOTE_ADDR']
+  if "HTTP_X_FORWARDED_FOR" in request.environ:
+    ip = request.environ["HTTP_X_FORWARDED_FOR"]
+  else:
+    ip = request.environ['REMOTE_ADDR']
+
+  # Split up multiple ip addresses and just take the first one.
+  ip = ip.split(", ")[0]
 
   # Get the list of 4 elements each.
   s = "".join(x.zfill(3) for x in ip.split("."))
   t = [(int(s[i:i + 4]) % 128) + 128 for i in range(0, len(s), 4)]
 
   # Return the tuple.
+  from random import shuffle
+  shuffle(t)
   return t
 
 
@@ -77,5 +92,10 @@ def debug():
 
   # Get either the port or the subdomain.
   return True if h.split(".")[0] == "dev" or h.split(":")[-1] == "5000" else False
-###############################################################################
+
+
+# CDN url getter.
+@app.template_global("cdn")
+def cdn(theCat, theFile):
+  return "http://cdn.milogert.com/" + theCat + "/" + theFile
 
