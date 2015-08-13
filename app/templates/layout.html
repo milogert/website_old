@@ -6,7 +6,7 @@
     {% set placeholder = field.label.text %}
   {% endif %}
 
-  <div class="form-group {% if field.errors %}error{% endif %}">
+  <div class="form-group {% if field.errors %}has-error{% endif %}">
     {% if with_label %}
       <label for="{{ field.id }}" class="control-label">
         {{ field.label.text }}{% if field.flags.required %} *{% endif %}:
@@ -73,7 +73,7 @@
     {% endif %}
 
     {% if field.errors %}
-      <span class="error help-inline">{{ field.errors|join(', ') }}</span>
+      <p class="has-error help-block">{{ field.errors|join(', ') }}</p>
     {% endif %}
 
     {% if field.description %}
@@ -92,19 +92,17 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    {% if debug() %}
-      <style type="text/css">
-        {% set c = ipColor() %}
-        .color-bar {
-          background-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, 1);
-          height: 20px;
-        }
-        .navbar-default, .navbar-default .navbar-collapse {
-          background-color: transparent;
-          border-color: transparent;
-        }
-      </style>
-    {% endif %}
+    <style type="text/css">
+      {% set c = ipColor() %}
+      .color-bar {
+        background-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, 1);
+        height: 20px;
+      }
+      .navbar-default, .navbar-default .navbar-collapse {
+        background-color: transparent;
+        border-color: transparent;
+      }
+    </style>
 
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
@@ -137,8 +135,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resume <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                {# <li><a href="/resume/view">Web</a></li> #}
-                <li><a href="{{ url_for('personal.resumePdf') }}">PDF</a></li>
+                <li><a href="{{ url_for('resume.index') }}">Web</a></li>
+                <li><a href="{{ url_for('resume.generate') }}">PDF</a></li>
                 <li><a href="{{ url_for('static', filename='personal/resume/resume.tex')     }}">Source</a></li>
               </ul>
             </li>
@@ -154,6 +152,7 @@
                 <li><a href="{{ url_for('iacl.index') }}">Imperial Assault Campaign Log</a></li>
                 <li><a href="{{ url_for('machines.index') }}">Machines</a></li>
                 <li><a href="{{ url_for('throne_magic.index') }}">Throne Magic</a></li>
+                <li><a href="{{ url_for('vehicles.serviceRecord') }}">Vehicle Service Records</a></li>
               </ul>
             </li>
 
