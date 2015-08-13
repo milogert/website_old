@@ -1,0 +1,93 @@
+{% extends "resume/slayout.html" %}
+
+{% block title %}Resume{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ theCore.name }} <small>References available upon request</small></h1>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3"><h2>Objective</h2></div>
+
+    <div class="col-md-9">
+      <p>{{ theCore.objective }}</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3"><h2>Education</h2></div>
+
+    <div class="col-md-9">
+      {% for aEdu in theEdus %}
+        <h4>{{ aEdu.name }} <small>{{ aEdu.city }}, {{ aEdu.state }}, {{ aEdu.start }} to {{ aEdu.end if aEdu.end else "present" }}</small></h4>
+
+        {% if aEdu.degree %}
+          <p><i>Graduated with a {{ aEdu.degree }}</i></p>
+        {% endif %}
+
+        {% if aEdu.note %}
+          <p>{{ aEdu.note }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3"><h2>Work Experience</h2></div>
+
+    <div class="col-md-9">
+      {% for aJob in theJobs %}
+        <h4>{{ aJob.title }}</h4>
+        <i>{{ aJob.company }} , {{ aJob.city }}, {{ aJob.state }}, {{ aJob.start }} to {{ aJob.end if aJob.end else "present" }}</i>
+
+        <ul>
+          {% for aDuty in theDuties[aJob.id] %}
+            <li>{{ aDuty.duty }}</li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3"><h2>Skills</h2></div>
+
+    <div class="col-md-9">
+      <dl class="dl-horizontal">
+        {% for aCategory in theSkillCats %}
+          <dt>{{ aCategory.name }}</dt>
+          {% for aSkill in theSkills[aCategory.id] %}
+            <dd>{{ aSkill.name }}</dd>
+          {% endfor %}
+        {% endfor %}
+      </dl>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3"><h2>Acheivements</h2></div>
+
+    <div class="col-md-9">
+      {% for aAward in theAwards %}
+        <p>{{ aAward.name }}</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}
