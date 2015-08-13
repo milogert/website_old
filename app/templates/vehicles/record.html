@@ -2,36 +2,12 @@
 
 {% block title %}Record - {{ theRecord.vehicle }} - {{ theRecord.date }}{% endblock %}
 
-{% block js %}
-<script>
-  $(function() {
-    $("#slidebutton").on("click", function() {
-      $("#record").animate({
-        left: "75%",
-      }, 200);
+{% block js %}{% endblock %}
 
-      $("#record").promise().done(function() {
-        window.document.location = "{{ url_for("vehicles.serviceRecord") }}";
-      });
-    });
-  });
-</script>
-{% endblock %}
-
-{% block css %}
-<style>
-  body {
-    overflow-x: hitden;
-  }
-</style>
-{% endblock %}
+{% block css %}{% endblock %}
 
 {% block content %}
-<div class="col-md-3">
-  <button class="btn btn-default btn-lg" id="slidebutton">back</button>
-</div>
-
-<div class="col-md-9" id="record">
+<div class="col-md-12" id="record">
   <h1>Service Record</h1>
 
   <div class="table-responsive">

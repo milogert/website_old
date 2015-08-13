@@ -21,3 +21,10 @@ class ServiceRecord(Base):
   miles = db.Column(db.Integer, nullable=False)
   description = db.Column(db.Text, nullable=False)
 
+  def __init__(self, date, vehicle, miles, description):
+    self.date = date
+    self.vehicle = vehicle
+    self.miles = miles
+    self.description = description
+
+

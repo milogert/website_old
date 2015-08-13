@@ -17,17 +17,9 @@
 {% block js %}
 <script>
   $(function() {
-    $(".clickable-row").on("click", function() {
-      var aUrl = $(this).data("href");
-
-      $("#holder").animate({
-        right: "100%",
-      }, 200);
-
-      $("#holder").promise().done(function() {
-        window.document.location = aUrl;
-      });
-    });
+    {% if theForm.errors %}
+      $("#newRecord").modal("show");
+    {% endif %}
   });
 </script>
 {% endblock %}
@@ -35,6 +27,8 @@
 {% block content %}
 <div class="col-md-12" id="holder">
   <h1>Vehicle Service Records</h1>
+
+  <button type="button" class="btn btn-primary" data-target="#newRecord" data-toggle="modal">New Entry</button>
 
   <div class="table-responsive">
     <table class="table table-hover">
@@ -58,6 +52,32 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newRecord" tabindex="-1" role="dialog" aria-labelledby="newRecordLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="newRecordLabel">Add a New Record</h4>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('vehicles.serviceRecord') }}">
+          {{ theForm.csrf_token }}
+          {{ form_field(theForm.date, with_label=True) }}
+          {{ form_field(theForm.vehicle, with_label=True) }}
+          {{ form_field(theForm.miles, with_label=True) }}
+          {{ form_field(theForm.description, with_label=True) }}
+          <button class="btn btn-default" type="submit">Submit</button
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

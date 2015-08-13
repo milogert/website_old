@@ -4,10 +4,11 @@ from flask import Flask, render_template, url_for, redirect, request, \
                   flash, session, Blueprint, jsonify
 from werkzeug import secure_filename
 
-from forms import PhotoForm
+from forms import NewRecord, PhotoForm
 
 # Import models.
 from app.mod_vehicles.models import ServiceRecord
+from app import db
 
 # Create the blueprint.
 mod_vehicles = Blueprint('vehicles', __name__, url_prefix="/vehicles")
@@ -16,14 +17,28 @@ mod_vehicles = Blueprint('vehicles', __name__, url_prefix="/vehicles")
 @mod_vehicles.before_request
 def requireAuth():
   if "username" not in session or session["username"] != "milo":
-    return redirect(url_for("personal.index"))
+    return redirect(url_for("auth.signin"))
 
 
-@mod_vehicles.route("/sr/")
+@mod_vehicles.route("/sr/", methods=["GET", "POST"])
 def serviceRecord():
+  aForm = NewRecord()
+
+  if aForm.validate_on_submit():
+    aRecord = ServiceRecord(
+      aForm.date.data,
+      aForm.vehicle.data,
+      aForm.miles.data,
+      aForm.description.data
+    )
+
+    db.session.add(aRecord)
+    db.session.commit()
+
   return render_template(
     "vehicles/service.html",
-    theRecords=ServiceRecord.query.order_by(ServiceRecord.date.desc()).all()
+    theRecords=ServiceRecord.query.order_by(ServiceRecord.date.desc()).all(),
+    theForm=aForm
   )
 
 
