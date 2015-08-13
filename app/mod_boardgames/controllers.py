@@ -60,77 +60,62 @@ def index():
   )
 
 
-@mod_boardgames.route('/newGame', methods=["POST"])
+@mod_boardgames.route('/newGame')
 def newGame():
-  if request.method == "POST":
-    print request.form["json"]
-    aGame = json.loads(request.form["json"])
+  aGame = request.args
 
-    # Create a new boardgame object.
-    aNewGame = Boardgame(
-      name=aGame["name"],
-      acquired=aGame["acquired"],
-      cost=aGame["cost"],
-      plays=aGame["plays"],
-      averageTime=aGame["averageTime"],
-      playsLeft=3 if aGame["status"] == "Play Next" else 0,
-      status=aGame["status"]
-    )
+  # Create a new boardgame object.
+  aNewGame = Boardgame(
+    name=aGame["name"],
+    acquired=aGame["acquired"],
+    cost=int(aGame["cost"]),
+    plays=int(aGame["plays"]),
+    averageTime=float(aGame["averageTime"]),
+    playsLeft=3 if aGame["status"] == "Play Next" else 0,
+    status=aGame["status"]
+  )
 
-    print aNewGame
+  print aNewGame
 
-    db.session.add(aNewGame)
-    db.session.commit()
+  db.session.add(aNewGame)
+  db.session.commit()
 
-    return request.form["json"]
-  else:
-    abort(405)
+  return json.dumps({"success": True}, 200, {"ContentType": "application/json"})
 
 
-@mod_boardgames.route('/addPlay', methods=["POST"])
+@mod_boardgames.route('/addPlay')
 def addPlay():
-  if request.method == "POST":
-    aJson = request.get_json()
+  aJson = request.args
 
-    # Get the row from the database.
-    aUpdate = Boardgame.query.filter_by(id=aJson["id"]).first()
+  # Get the row from the database.
+  aUpdate = Boardgame.query.filter_by(id=int(aJson["id"])).first()
 
-    # Change the values.
-    aUpdate.plays = aJson["plays"]
-    #aUpdate.playNext = aJson["playNext"]
-    aUpdate.playsLeft = aJson["playsLeft"]
-    aUpdate.status = aJson["status"]
+  # Change the values.
+  aUpdate.plays = int(aJson["plays"])
+  aUpdate.playsLeft = int(aJson["playsLeft"])
+  aUpdate.status = aJson["status"]
 
-    # Commit the change.
-    db.session.commit()
+  # Commit the change.
+  db.session.commit()
 
-    return abort(404)
-  else:
-    abort(405)
+  return json.dumps({"success": True}, 200, {"ContentType": "application/json"})
 
 
-@mod_boardgames.route('/updateStatus', methods=["POST"])
+@mod_boardgames.route('/updateStatus')
 def updateStatus():
-  if request.method == "POST":
-    aJson = request.get_json()
+  aJson = request.args
 
-    # Get the row from the database.
-    aUpdate = Boardgame.query.filter_by(id=aJson["id"]).first()
+  # Get the row from the database.
+  aUpdate = Boardgame.query.filter_by(id=int(aJson["id"])).first()
 
-    print aUpdate
+  # Change the values.
+  aUpdate.playsLeft = int(aJson["playsLeft"])
+  aUpdate.status = aJson["status"]
 
-    # Change the values.
-    aUpdate.status = aJson["status"]
-    aUpdate.playsLeft = aJson["playsLeft"]
+  # Commit the change.
+  db.session.commit()
 
-    print aUpdate
-
-    # Commit the change.
-    db.session.commit()
-
-    return abort(404)
-  else:
-    abort(405)
+  return json.dumps({"success": True}, 200, {"ContentType": "application/json"})
 
 
 @mod_boardgames.route('/bgg/<theUsername>')

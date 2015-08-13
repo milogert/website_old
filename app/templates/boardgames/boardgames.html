@@ -49,24 +49,20 @@
       aPlays = parseInt(aPlaysEle.text());
       aLeft = parseInt(aLeftEle.text());
 
-      // console.log(aRow.find(".name").text() + " " + aPlays + " " + aNext + " " + aLeft);
-
-      aDict = {
-        "id": aId,
-        "plays": aPlays,
-        "playsLeft": aLeft,
-        "status": aLeft === 0 ? "Default" : "Play Next"
-      }
-
       // Send the new values to the server.
       $.ajax({
-        type: "POST",
-        url: "/games/bg/addPlay",
+        type: "GET",
+        url: "{{ url_for('boardgames.addPlay') }}",
         contentType: "application/json",
-        data: JSON.stringify(aDict),
+        data: {
+          "id": aId,
+          "plays": aPlays,
+          "playsLeft": !aLeft ? 0 : aLeft,
+          "status": !aLeft ? "Default" : "Play Next"
+        },
         success: function(response, status, xhr) {
           // Reload the page.
-          // location.reload(true);
+          location.reload(true);
         }
       });
     });
@@ -102,11 +98,9 @@
 
         // Send the dictionary to the server.
         $.ajax({
-          type: "POST",
-          url: "/games/bg/newGame",
-          data: {
-            json: JSON.stringify(aDict)
-          },
+          type: "GET",
+          url: "{{ url_for('boardgames.newGame') }}",
+          data: aDict,
           success: function(response, status, xhr) {
             // Reload the page.
             location.reload(true);
@@ -140,17 +134,17 @@
 
         aDict["playsLeft"] = 0;
       } else {
-        exit();
+        return;
       }
 
       aDict["status"] = this.value;
 
       // Send to server.
       $.ajax({
-        type: "POST",
-        url: "/games/bg/updateStatus",
+        type: "GET",
+        url: "{{ url_for('boardgames.updateStatus') }}",
         contentType: "application/json",
-        data: JSON.stringify(aDict),
+        data: aDict,
         success: function(response, status, xhr) {
           toastr.success("Updating the status of the game.");
           // Reload the page.
