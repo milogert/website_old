@@ -14,7 +14,7 @@ class ServiceRecord(Base):
   __tablename__ = "ServiceRecord"
 
   vehicle = db.Column(
-    db.Enum('Yamaha FZ-0'),
+    db.Enum('Toyota Solara', 'Yamaha FZ-0'),
     nullable=False
   )
   date = db.Column(db.Date, nullable=False)

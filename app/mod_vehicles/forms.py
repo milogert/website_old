@@ -9,6 +9,7 @@ class NewRecord(Form):
   vehicle = SelectField(
     "Vehicle",
     choices=[
+      ("Toyota Solara", "Toyota Solara"),
       ("Yamaha FZ-07", "Yamaha FZ-07")
     ]
   )
