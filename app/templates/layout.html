@@ -89,8 +89,7 @@
 
     <!-- Latest compiled and minified CSS -->
     {% block css %}{% endblock %}
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ cdn('css', 'all.min.css') }}" rel="stylesheet">
 
     <style type="text/css">
       {% set c = ipColor() %}
@@ -105,10 +104,8 @@
     </style>
 
     <!-- Latest compiled and minified JavaScript -->
-    <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
-    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="{{ cdn('js', 'all.min.js') }}"></script>
     {% block js %}{% endblock %}
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     {# <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon"> #}
     {# <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon"> #}
