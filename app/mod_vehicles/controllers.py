@@ -35,6 +35,10 @@ def serviceRecord():
     db.session.add(aRecord)
     db.session.commit()
 
+    # Create the correct directory.
+    import os
+    os.makedirs("app/static/vehicles/receipts/" + str(aRecord.id))
+
   return render_template(
     "vehicles/service.html",
     theRecords=ServiceRecord.query.order_by(ServiceRecord.date.desc()).all(),

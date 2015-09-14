@@ -20,6 +20,10 @@
     {% if theForm.errors %}
       $("#newRecord").modal("show");
     {% endif %}
+
+    $(".clickable-row").on("click", function(theEvent) {
+      window.location = $(theEvent.currentTarget).data("href");
+    });
   });
 </script>
 {% endblock %}
@@ -70,7 +74,7 @@
           {{ form_field(theForm.vehicle, with_label=True) }}
           {{ form_field(theForm.miles, with_label=True) }}
           {{ form_field(theForm.description, with_label=True) }}
-          <button class="btn btn-default" type="submit">Submit</button
+          <button class="btn btn-default" type="submit">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
