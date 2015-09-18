@@ -32,7 +32,16 @@
 <div class="col-md-12" id="holder">
   <h1>Vehicle Service Records</h1>
 
-  <button type="button" class="btn btn-primary" data-target="#newRecord" data-toggle="modal">New Entry</button>
+  <p>
+    <a href="#" data-target="#newRecord" data-toggle="modal">New Entry</a>
+  </p>
+
+  <p>
+    Print Records: 
+    {% for aVehicle in theVL %}
+      <a href="{{ url_for('vehicles.printRecord', theId=aVehicle.id) }}">{{ aVehicle.year + " " + aVehicle.make + " " + aVehicle.model }}</a>
+    {% endfor %}
+  </p>
 
   <div class="table-responsive">
     <table class="table table-hover">
@@ -49,7 +58,7 @@
         {% for aRecord in theRecords %}
           <tr class="clickable-row" data-href="{{ url_for("vehicles.specificRecord", theId=aRecord.id) }}">
             <td>{{ aRecord.date }}</td>
-            <td>{{ aRecord.vehicle }}</td>
+            <td>{{ aRecord.make + " " + aRecord.model }}</td>
             <td>{{ aRecord.miles }}</td>
             <td class="description">{{ aRecord.description }}</td>
           </tr>

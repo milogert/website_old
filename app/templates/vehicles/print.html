@@ -1,0 +1,50 @@
+{% extends "vehicles/slayout.html" %}
+
+{% block title %}Print Records{% endblock %}
+
+{% block css %}
+<style>
+  .description {
+    white-space: pre;
+  }
+</style>
+{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <h1>Print Records <small>{{ theVehicle.year + " " + theVehicle.make + " " + theVehicle.model }}</small></h1>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 13%;">Date</th>
+          <th style="width: 10%;">Miles</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for aRecord in theRecords %}
+          <tr>
+            <td>{{ aRecord.date }}</td>
+            <td>{{ aRecord.miles }}</td>
+            <td class="description">{{ aRecord.description }}</td>
+          </tr>
+
+          {% if aRecord.photos %}
+            <tr><td style="border-top: none;" colspan="3">
+              {% for aPhoto in aRecord.photos %}
+                <div class="col-md-3 col-xs-6"><img src="{{ aPhoto }}" class="img-responsive"></div>
+              {% endfor %}
+            </td></tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

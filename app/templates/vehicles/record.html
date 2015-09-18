@@ -8,12 +8,11 @@
 
 {% block content %}
 <div class="col-md-12" id="record">
-  <h1>Service Record</h1>
+  <h1>Service Record <small>{{ theRecord.date }}</small></h1>
 
   <div class="table-responsive">
     <table class="table table-striped">
-      <tr><th>Vehicle:</th><td>{{ theRecord.vehicle }}</td></tr>
-      <tr><th>Date:</th><td>{{ theRecord.date }}</td></tr>
+      <tr><th>Vehicle:</th><td>{{ theRecord.year }} {{ theRecord.make }} {{ theRecord.model }}</td></tr>
       <tr><th>Miles:</th><td>{{ theRecord.miles }}</td></tr>
       <tr><th>Description:</th><td>{{ theRecord.description }} </td></tr>
     </table>

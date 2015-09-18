@@ -9,17 +9,32 @@ class Base(db.Model):
   id = db.Column(db.Integer, primary_key=True)
 
 
+class Vehicle(Base):
+  __bind_key__ = "vehicle"
+  __tablename__ = "Vehicle"
+
+  make = db.Column(db.Text, nullable=False)
+  model = db.Column(db.Text, nullable=False)
+  year = db.Column(db.Text, nullable=False)
+
+  vehicleR = db.relationship(
+    "ServiceRecord",
+    backref="ServiceRecord.vehicle",
+    primaryjoin="Vehicle.id==ServiceRecord.vehicle",
+    lazy="joined"
+  )
+
+
 class ServiceRecord(Base):
-  __bind_key__ = "personal"
+  __bind_key__ = "vehicle"
   __tablename__ = "ServiceRecord"
 
-  vehicle = db.Column(
-    db.Enum('Toyota Solara', 'Yamaha FZ-0'),
-    nullable=False
-  )
+  vehicle = db.Column(db.Integer, db.ForeignKey("Vehicle.id"), nullable=False)
   date = db.Column(db.Date, nullable=False)
   miles = db.Column(db.Integer, nullable=False)
   description = db.Column(db.Text, nullable=False)
+
+  vehicleR = db.relationship("Vehicle", foreign_keys="ServiceRecord.vehicle")
 
   def __init__(self, date, vehicle, miles, description):
     self.date = date
