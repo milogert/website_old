@@ -47,7 +47,8 @@ class NewGame(Form):
         ("", ""),
         ("Default", "Default"),
         ("Play Next", "Play Next"),
-        ("Has Not Arrived", "Has Not Arrived")
+        ("Has Not Arrived", "Has Not Arrived"),
+        ("Donated or Sold", "Donated or Sold")
       ]
     )
 
@@ -59,6 +60,7 @@ class ExistingGame(Form):
         ("", ""),
         ("Default", "Default"),
         ("Play Next", "Play Next"),
-        ("Has Not Arrived", "Has Not Arrived")
+        ("Has Not Arrived", "Has Not Arrived"),
+        ("Donated or Sold", "Donated or Sold")
       ]
     )

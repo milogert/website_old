@@ -250,5 +250,44 @@
       </tfoot>
     </table>
   </div>
+
+  <h2>RIP Games</h2>
+
+  <p>These are games that I have given away or sold. Stats are recorded for history's sake.</p>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Cost</th>
+          <th>Plays</th>
+          <th>Avg Play Time</th>
+          <th>Cost/Hour</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for aGame in thePreviousGames %}
+          <tr>
+            <td>{{ aGame.name }}</td>
+            <td>{{ aGame.cost }}</td>
+            <td>{{ aGame.plays }}</td>
+            <td>{{ aGame.averageTime }}</td>
+            <td>
+              {% if aGame.plays * aGame.averageTime > 0 %}
+                ${{ "{:.2f}".format(aGame.cost / (aGame.plays * aGame.averageTime)) }}
+              {% else %}
+                N/A
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+
+      <tfoot>
+
+      </tfoot>
+    </table>
 </div>
 {% endblock %}

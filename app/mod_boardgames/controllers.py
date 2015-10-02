@@ -36,12 +36,14 @@ def index():
   aNewGameForm = NewGame(request.form)
   aExistingGameForm = ExistingGame(request.form)
 
-  aBGs = Boardgame.query.order_by(
+  aBGs = Boardgame.query.filter(Boardgame.status!="Donated or Sold").order_by(
     Boardgame.status.asc(),
     Boardgame.name.asc()
   ).all()
   aSum = 0
   aCount = 0
+
+  aPrev = Boardgame.query.filter_by(status="Donated or Sold").order_by(Boardgame.name.asc()).all()
 
   for aBG in aBGs:
     if aBG.plays * aBG.averageTime > 0:
@@ -56,7 +58,8 @@ def index():
     theBoardgames=aBGs,
     theAvg=aAvg,
     theNewGameForm=aNewGameForm,
-    theExistingGameForm=aExistingGameForm
+    theExistingGameForm=aExistingGameForm,
+    thePreviousGames=aPrev
   )
 
 

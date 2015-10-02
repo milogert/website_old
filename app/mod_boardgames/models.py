@@ -24,7 +24,7 @@ class Boardgame(Base):
   averageTime = db.Column(db.Float, nullable=False)
   playsLeft = db.Column(db.Integer, nullable=False, default=3)
   status = db.Column(
-    db.Enum("Play Next", "Default", "Has Not Arrived"),
+    db.Enum("Play Next", "Default", "Has Not Arrived", 'Donated or Sold'),
     nullable=False
   )
 
